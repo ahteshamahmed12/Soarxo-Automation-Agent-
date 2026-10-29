@@ -13,6 +13,3 @@ class Catalog(SQLModel, table=True):
     whatsapp_url: Optional[str] = None  # shared link URL for WhatsApp
     keywords: str = ""   # comma-separated keywords for matching inquiries
     active: bool = True
-
-
-pass

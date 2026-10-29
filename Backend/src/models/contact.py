@@ -19,6 +19,3 @@ class LeadContact(SQLModel, table=True):
     created_at: datetime = Field(
         default_factory=datetime.utcnow, sa_column_kwargs={"default": "now()"}
     )
-
-
-pass

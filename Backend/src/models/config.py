@@ -17,6 +17,3 @@ class TaxConfig(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     tax_name: str        # e.g., "GST", "Sales Tax"
     rate_pct: float      # e.g., 17.0 for 17%
-
-
-pass

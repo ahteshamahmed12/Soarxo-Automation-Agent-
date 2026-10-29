@@ -36,6 +36,7 @@ def db_session() -> Session:
     with Session(engine) as session:
         yield session
     SQLModel.metadata.drop_all(engine)
+    engine.dispose()
 
 
 @pytest.fixture(name="mock_whatsapp_client")
