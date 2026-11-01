@@ -3,6 +3,8 @@ from typing import Optional
 
 from sqlmodel import Field, Relationship, SQLModel
 
+from ..core.utils import utcnow
+
 
 class Client(SQLModel, table=True):
     __tablename__ = "clients"
@@ -13,10 +15,10 @@ class Client(SQLModel, table=True):
     company: str
     phone: Optional[str] = None
     created_at: datetime = Field(
-        default_factory=datetime.utcnow, sa_column_kwargs={"default": "now()"}
+        default_factory=utcnow, sa_column_kwargs={"default": "now()"}
     )
     updated_at: datetime = Field(
-        default_factory=datetime.utcnow,
+        default_factory=utcnow,
         sa_column_kwargs={"default": "now()", "onupdate": "now()"},
     )
 

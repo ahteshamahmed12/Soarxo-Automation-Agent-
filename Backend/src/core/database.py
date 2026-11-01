@@ -1,5 +1,5 @@
-from sqlmodel import SQLModel, create_engine, Session
 from sqlalchemy.engine import Engine
+from sqlmodel import Session, SQLModel, create_engine
 
 from ..core.config import settings
 
@@ -7,7 +7,7 @@ engine: Engine = create_engine(settings.DATABASE_URL, echo=False)
 
 
 def init_db() -> None:
-    from ..models import *  # noqa: F401,F403 — register all models
+    from .. import models  # noqa: F401 — triggers __init__.py imports registering tables
     SQLModel.metadata.create_all(engine)
 
 

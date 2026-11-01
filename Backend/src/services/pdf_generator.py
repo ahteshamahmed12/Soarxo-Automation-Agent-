@@ -2,10 +2,9 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from ..models.approval import ApprovalRequest
-from ..models.invoice import InvoiceDraft
 from ..core.config import settings
 from ..core.logging import log
+from ..models.invoice import InvoiceDraft
 
 
 class PDFGenerator:

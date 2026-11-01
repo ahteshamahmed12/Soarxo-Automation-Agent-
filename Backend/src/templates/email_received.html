@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Received — Sorax Industrial Solution</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .order-summary {
+            background: #f8f9fa;
+            border-left: 4px solid #0056b3;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .status-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .escalated {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+        a.button {
+            display: inline-block;
+            background: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Sorax Industrial Solution</h1>
+        <p>Order Confirmation</p>
+    </div>
+
+    <p>Dear Valued Customer,</p>
+
+    <p>Thank you for your order. We have received your email and successfully
+    parsed <span class="status-badge">({{ITEM_COUNT}} items)</span> line items
+    into our system.</p>
+
+    <div class="order-summary">
+        <h3>Order Summary</h3>
+        <p><strong>Order ID:</strong> #{{ORDER_ID}}</p>
+        <p><strong>Status:</strong> Intake Pending — our team is reviewing your order.</p>
+        <p><strong>Items Received:</strong> {{ITEM_COUNT}} line items</p>
+        {{#if ESCALATED_COUNT}}<p><strong>Items Needing Review:</strong> {{ESCALATED_COUNT}} item(s) require owner clarification.</p>{{/if}}
+    </div>
+
+    {{#if ESCALATED_COUNT}}
+    <div class="escalated">
+        <h3>Action Required</h3>
+        <p>{{ESCALATED_COUNT}} item(s) in your order could not be fully
+        understood (e.g., quantities described as "a few" or unknown
+        part numbers). Our team will contact you shortly to clarify
+        these items. The rest of your order is being processed.</p>
+    </div>
+    {{/if}}
+
+    <p>Your order is now in our intake queue. A member of our team will:
+    review the items, source the best quotations from our dealers, and
+    get back to you with pricing — all within 48 hours.</p>
+
+    <p>If you need to make changes to your order, please reply to this
+    email with your order ID ({{ORDER_ID}}) in the subject line.</p>
+
+    <p>Thank you for choosing Sorax.</p>
+
+    <p> — The Sorax Team</p>
+
+    <div class="footer">
+        <p>Sorax Industrial Solution</p>
+        <p>This is an automated message. Please do not reply directly.</p>
+    </div>
+</body>
+</html>

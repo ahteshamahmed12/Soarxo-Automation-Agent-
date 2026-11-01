@@ -5,16 +5,14 @@ to a client without explicit owner approval. This module manages the
 interruption, state tracking, and approval flow for all financial documents.
 """
 
-from datetime import datetime
 from enum import Enum
 from typing import Optional
 
 from sqlmodel import Session, select
-from agents import RunContext, Runner, trace
 
-from ..core.config import settings
 from ..core.logging import log
-from ..models.approval import ApprovalRequest, ApprovalStatus, ApprovalRequestLog
+from ..core.utils import utcnow
+from ..models.approval import ApprovalRequest, ApprovalRequestLog, ApprovalStatus
 from ..models.invoice import InvoiceDraft, InvoiceStatus
 
 
@@ -75,7 +73,7 @@ class ApprovalManager:
             return False
 
         req.status = ApprovalStatus.APPROVED
-        req.resolved_at = datetime.utcnow()
+        req.resolved_at = utcnow()
         req.resolved_by = approver
 
         # Log the approval
@@ -95,7 +93,7 @@ class ApprovalManager:
             invoice = self.db.get(InvoiceDraft, req.entity_id)
             if invoice and invoice.status == InvoiceStatus.PENDING_APPROVAL:
                 invoice.status = InvoiceStatus.APPROVED
-                invoice.approved_at = datetime.utcnow()
+                invoice.approved_at = utcnow()
                 self.db.add(invoice)
                 self.db.commit()
 
@@ -111,13 +109,13 @@ class ApprovalManager:
         return True
 
     def reject(self, request_id: int, rejector: str = "owner") -> bool:
-        """Reject an approval request. Returns the workflow to the agent for escalation."""
+        """Reject an approval request, returning workflow for escalation."""
         req = self.db.get(ApprovalRequest, request_id)
         if not req or req.status != ApprovalStatus.PENDING:
             return False
 
         req.status = ApprovalStatus.REJECTED
-        req.resolved_at = datetime.utcnow()
+        req.resolved_at = utcnow()
         req.resolved_by = rejector
 
         self.db.add(

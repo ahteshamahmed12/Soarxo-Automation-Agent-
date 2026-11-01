@@ -1,15 +1,17 @@
 from sqlmodel import SQLModel
 
+from .approval import ApprovalRequest
+from .audit import AuditLog
+from .catalog import Catalog
+
 # Re-export all models for SQLModel.metadata.create_all()
+from .auth import SignupRequest, User, UserRole, UserStatus
 from .client import Client, ClientContact
-from .order import Order, OrderItem, LineItem
+from .config import MarginConfig, TaxConfig
+from .contact import LeadContact
 from .dealer import Dealer, DealerQuote
 from .invoice import InvoiceDraft
-from .catalog import Catalog
-from .contact import LeadContact
-from .approval import ApprovalRequest
-from .config import MarginConfig, TaxConfig
-from .audit import AuditLog
+from .order import LineItem, Order, OrderItem
 
 __all__ = [
     "SQLModel",
@@ -27,4 +29,8 @@ __all__ = [
     "MarginConfig",
     "TaxConfig",
     "AuditLog",
+    "User",
+    "SignupRequest",
+    "UserRole",
+    "UserStatus",
 ]

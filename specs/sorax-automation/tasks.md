@@ -68,13 +68,13 @@
 
 ### Implementation for User Story 2
 
-- [ ] T020 Create Order and OrderItem models in `backend/src/models/order.py`
-- [ ] T021 [P] Create Client and ClientContact models in `backend/src/models/client.py`
-- [ ] T022 Create OrderIntakeAgent in `backend/src/agents/order_intake.py` with email parsing tool
-- [ ] T023 Create `backend/src/services/email_parser.py` for order email extraction with unknown-part escalation
-- [ ] T024 Create email polling job in `backend/src/jobs/email_polling.py` using APScheduler
-- [ ] T025 [P] Create order-received email template in `backend/src/templates/email_received.html`
-- [ ] T026 Add integration test for full order intake flow in `backend/tests/integration/test_order_intake_flow.py`
+- [X] T020 Create Order and OrderItem models in `backend/src/models/order.py`
+- [X] T021 [P] Create Client and ClientContact models in `backend/src/models/client.py`
+- [X] T022 Create OrderIntakeAgent in `backend/src/agents/order_intake.py` with email parsing tool
+- [X] T023 Create `backend/src/services/email_parser.py` for order email extraction with unknown-part escalation
+- [X] T024 Create email polling job in `backend/src/jobs/email_polling.py` using APScheduler
+- [X] T025 [P] Create order-received email template in `backend/src/templates/email_received.html`
+- [X] T026 Add integration test for full order intake flow in `backend/tests/integration/test_order_intake_flow.py`
 
 **Checkpoint**: User Story 2 should be fully functional and testable independently
 

@@ -5,7 +5,10 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
+    # --- Database ---
     DATABASE_URL: str = Field(..., description="PostgreSQL connection string")
+
+    # --- AI / External APIs ---
     OPENAI_API_KEY: str = Field(..., description="OpenAI API key for agents")
     WHATSAPP_TOKEN: str = Field(..., description="Meta Business Cloud API access token")
     WHATSAPP_PHONE_NUMBER_ID: str = Field(..., description="WhatsApp phone number ID")
@@ -23,6 +26,14 @@ class Settings(BaseSettings):
         default="", description="Comma-separated list of approved client email addresses"
     )
 
+    # --- Auth (JWT) ---
+    JWT_SECRET_KEY: str = Field(..., description="Secret key for JWT signing")
+    JWT_ALGORITHM: str = Field(default="HS256", description="JWT signing algorithm")
+    JWT_EXPIRE_MINUTES: int = Field(
+        default=43200, description="JWT token expiry in minutes (default: 30 days)"
+    )
+
+    # --- Project ---
     PROJECT_NAME: str = "Sorax Automation"
     DEBUG: bool = False
 

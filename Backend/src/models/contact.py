@@ -3,6 +3,8 @@ from typing import Optional
 
 from sqlmodel import Field, SQLModel
 
+from ..core.utils import utcnow
+
 
 class LeadContact(SQLModel, table=True):
     __tablename__ = "lead_contacts"
@@ -17,5 +19,5 @@ class LeadContact(SQLModel, table=True):
     contacted_at: Optional[datetime] = None
     status: str = "new"  # new, contacted, replied, converted
     created_at: datetime = Field(
-        default_factory=datetime.utcnow, sa_column_kwargs={"default": "now()"}
+        default_factory=utcnow, sa_column_kwargs={"default": "now()"}
     )

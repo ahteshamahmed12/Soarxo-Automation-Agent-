@@ -17,6 +17,7 @@ os.environ.setdefault("GMAIL_IMAP_PASSWORD", "test_app_password")
 os.environ.setdefault("SMTP_USER", "test@example.com")
 os.environ.setdefault("SMTP_PASSWORD", "test_smtp_password")
 os.environ.setdefault("APPROVED_CLIENT_SENDERS", "approved@example.com")
+os.environ.setdefault("JWT_SECRET_KEY", "test-jwt-secret-key-for-testing-only")
 
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch

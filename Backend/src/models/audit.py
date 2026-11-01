@@ -2,7 +2,9 @@ from datetime import datetime
 from typing import Any, Optional
 
 from sqlalchemy import Column
-from sqlmodel import Field, JSON, SQLModel
+from sqlmodel import JSON, Field, SQLModel
+
+from ..core.utils import utcnow
 
 
 class AuditLog(SQLModel, table=True):
@@ -10,7 +12,7 @@ class AuditLog(SQLModel, table=True):
 
     id: Optional[int] = Field(default=None, primary_key=True)
     timestamp: datetime = Field(
-        default_factory=datetime.utcnow, sa_column_kwargs={"default": "now()"}
+        default_factory=utcnow, sa_column_kwargs={"default": "now()"}
     )
     agent_id: str
     action: str

@@ -2,7 +2,9 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import Field, SQLModel
+
+from ..core.utils import utcnow
 
 
 class ApprovalStatus(str, Enum):
@@ -21,12 +23,10 @@ class ApprovalRequest(SQLModel, table=True):
     reason: str        # what needs approval (e.g., "invoice total: PKR 125,000")
     status: ApprovalStatus = Field(default=ApprovalStatus.PENDING)
     created_at: datetime = Field(
-        default_factory=datetime.utcnow, sa_column_kwargs={"default": "now()"}
+        default_factory=utcnow, sa_column_kwargs={"default": "now()"}
     )
     resolved_at: Optional[datetime] = None
     resolved_by: Optional[str] = None  # owner identifier
-
-    invoice: Optional["InvoiceDraft"] = Relationship(back_populates="approval_request")
 
 
 class ApprovalRequestLog(SQLModel, table=True):
@@ -39,9 +39,5 @@ class ApprovalRequestLog(SQLModel, table=True):
     action: str  # "approve", "reject", "escalate", "remind"
     note: Optional[str] = None
     timestamp: datetime = Field(
-        default_factory=datetime.utcnow, sa_column_kwargs={"default": "now()"}
+        default_factory=utcnow, sa_column_kwargs={"default": "now()"}
     )
-
-
-# Avoid circular imports
-from .invoice import InvoiceDraft  # noqa: E402

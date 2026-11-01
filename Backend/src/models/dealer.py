@@ -3,6 +3,8 @@ from typing import Optional
 
 from sqlmodel import Field, Relationship, SQLModel
 
+from ..core.utils import utcnow
+
 
 class Dealer(SQLModel, table=True):
     __tablename__ = "dealers"
@@ -14,7 +16,7 @@ class Dealer(SQLModel, table=True):
     active: bool = True
     notes: Optional[str] = None
     created_at: datetime = Field(
-        default_factory=datetime.utcnow, sa_column_kwargs={"default": "now()"}
+        default_factory=utcnow, sa_column_kwargs={"default": "now()"}
     )
 
     quotes: list["DealerQuote"] = Relationship(
@@ -31,7 +33,7 @@ class DealerQuote(SQLModel, table=True):
     order_id: int = Field(foreign_key="orders.id")
     total: float
     quoted_at: datetime = Field(
-        default_factory=datetime.utcnow, sa_column_kwargs={"default": "now()"}
+        default_factory=utcnow, sa_column_kwargs={"default": "now()"}
     )
     raw_reply: Optional[str] = None
     status: str = "pending"  # pending, selected, rejected

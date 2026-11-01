@@ -2,7 +2,9 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import CheckConstraint, Field, Relationship, SQLModel
+
+from ..core.utils import utcnow
 
 
 class OrderStatus(str, Enum):
@@ -29,10 +31,10 @@ class Order(SQLModel, table=True):
     status: OrderStatus = Field(default=OrderStatus.INTAKE_PENDING)
     notes: Optional[str] = None
     created_at: datetime = Field(
-        default_factory=datetime.utcnow, sa_column_kwargs={"default": "now()"}
+        default_factory=utcnow, sa_column_kwargs={"default": "now()"}
     )
     updated_at: datetime = Field(
-        default_factory=datetime.utcnow,
+        default_factory=utcnow,
         sa_column_kwargs={"default": "now()", "onupdate": "now()"},
     )
 
@@ -50,6 +52,9 @@ class Order(SQLModel, table=True):
 
 class OrderItem(SQLModel, table=True):
     __tablename__ = "order_items"
+    __table_args__ = (
+        CheckConstraint("quantity > 0", name="ck_order_item_quantity_positive"),
+    )
 
     id: Optional[int] = Field(default=None, primary_key=True)
     order_id: int = Field(foreign_key="orders.id")
@@ -77,5 +82,5 @@ class LineItem(SQLModel, table=True):
 
 # Avoid circular imports
 from .client import Client  # noqa: E402
-from .invoice import InvoiceDraft  # noqa: E402
 from .dealer import DealerQuote  # noqa: E402
+from .invoice import InvoiceDraft  # noqa: E402
